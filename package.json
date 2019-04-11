@@ -10,7 +10,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --watchAll --verbose",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -24,6 +24,6 @@
   ],
   "devDependencies": {
     "jest-dom": "^3.1.2",
-    "react-testing-library": "^6.0.0"
+    "react-testing-library": "^6.1.2"
   }
 }
