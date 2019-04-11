@@ -22,30 +22,26 @@ describe('Dashboard', () => {
   it('Defaults to unlocked and open', () => {
     expect(wrap.getByText(/unlocked/i)).toBeTruthy();
     expect(wrap.getByText(/\bopen\b/i)).toBeTruthy(); 
-    expect(wrap.getByText(/close gate/i)).toBeTruthy();
-
+    expect(wrap.getByText(/\bclose gate\b/i)).toBeTruthy(); 
   })
 
   it('Cannot be closed or opened if it is locked', async () => {
-    rt.fireEvent.click(wrap.queryByTestId(/closeOpenButton/i));
     // expect({}).toMatchObject(wrap);
+    const closeOpenButton = wrap.queryByTestId(/closeOpenButton/i)
+    const lockUnlockButton = wrap.queryByTestId(/lockUnlockButton/i)
+
+    rt.fireEvent.click(closeOpenButton);
     const closedElement = await wrap.findByText(/\bclosed\b/i); // findBy wraps Getby with a wait
+    expect(closedElement).toBeTruthy(); 
 
-    expect(closedElement).toBeTruthy();
-    
-    rt.fireEvent.click(wrap.queryByTestId(/lockUnlockButton/i));
-
+    rt.fireEvent.click(lockUnlockButton);
     const lockedElement = await wrap.findByText(/\blocked\b/i); 
-      
-    expect(lockedElement).toBeTruthy(); // but it renders quicky enough that you can get away with getBy
+    expect(lockedElement).toBeTruthy(); 
 
-    rt.fireEvent.click(wrap.queryByTestId(/closeOpenButton/i));
-
+    rt.fireEvent.click(closeOpenButton);
     const closedElement2 = await wrap.findByText(/\bclosed\b/i);
-
     expect(closedElement2).toBeTruthy()
     expect(wrap.queryByText(/\bclose gate\b/i)).toBeFalsy()
-
   })
 
   it('Cannot be closed or opened if it is locked v2', async () => {
